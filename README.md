@@ -1,96 +1,147 @@
-# Mini Hackathon AI — Batch 03
+# VLearn Concise-RAG Tutor (PDF Tutor) · Nhóm 03 · Zone A
 
-**SPEC → Prototype → Demo.** Đây không phải cuộc thi code — đây là cuộc thi **tư duy sản phẩm AI**.
+> **Sản phẩm thuộc dự án Mini Hackathon AI — Batch 03**
+> Một công cụ hỗ trợ học tập đắc lực cho học viên VLearn: Tải tài liệu PDF (slide bài giảng), bôi đen hoặc chụp ảnh một vùng kiến thức khó để hỏi đáp trực tiếp với trợ lý AI được kiểm chứng (grounded) nghiêm ngặt từ nội dung tài liệu. Đồng thời tự động tạo câu hỏi trắc nghiệm ôn tập.
 
-- Thời lượng: **1,5 ngày** (một ngày build + một buổi demo)
-- Nhóm: **4-5 người** · zone tối đa 5 nhóm · thi theo lớp
+---
 
-## Bắt đầu từ đâu?
+## 👥 Thành viên nhóm & Phân công công việc
 
-1. Đọc **`01-de-bai.md`** để chọn hướng và hiểu tiêu chí.
-2. Mở **`02-guide.md`** — hướng dẫn từng giai đoạn, đứng ở đâu đọc mục đó.
-3. Viết spec theo **`03-template-ai-spec.md`** — deliverable trung tâm của cả sự kiện.
-4. Đọc **`04-rubric.md`** ngay từ đầu — biết trước bài được chấm theo tiêu chí nào.
+- **Đào Văn Đạt – 2A202601302**: phụ trách chuẩn bị tài liệu nộp, cập nhật phần README và cấu trúc repo, phối hợp chuẩn bị nội dung demo và reflection cho mốc nộp cuối.
+- **Nguyễn Thị Trà My – 2A202601026**: phụ trách phần validation, ghi nhận feedback từ vòng user test và tổng hợp phản ánh cá nhân.
+- **Hoàng Trường Giang – 2A202601224**: phụ trách prompt engineering và xây dựng golden set.
+- **Đào Ngọc Duy – 2A202601780**: nghiên cứu yêu cầu, xây dựng spec, triển khai backend prototype và phối hợp phát triển toàn diện.
+- **Nguyễn Thị Kiều Trang – frontend**: phụ trách giao diện frontend và cấu trúc trải nghiệm người dùng.
 
-| File / thư mục | Nội dung |
-|---|---|
-| `01-de-bai.md` | Đề bài 3 hướng · 5 tiêu chí nghiệm thu · ràng buộc chung |
-| `02-guide.md` | Hướng dẫn 5 giai đoạn: khám phá → spec → build → đo & validate → demo |
-| `03-template-ai-spec.md` | Template AI Spec (nộp 23:59 ngày 1) |
-| `04-rubric.md` | Rubric 100 điểm (25 nộp checkpoint + 75 chấm bài) + checklist xác minh 6 mốc |
-| `data/` | Dữ liệu thật đã ẩn danh: chatlog VLearn tutor + 6 transcript bài giảng + 2 bộ slide bản hackathon — dùng để tìm bằng chứng và xây golden set |
-| `tham-khao/` | JTBD Playbook (PDF) + worksheet JTBD đầy đủ — đọc khi muốn đào sâu |
+### Cấu trúc nộp repo
+- [README.md](README.md): thông tin thành viên, phân công và hướng dẫn chạy thử.
+- [spec.md](spec.md): AI Spec theo template.
+- [demo-slides.pdf](demo-slides.pdf): slide demo 6 trang.
+- [codebase/](codebase/): prototype có ghi chú phần mock và phần chạy thật.
+- [eval/](eval/): golden set và bảng kết quả chạy.
+- [validation/feedback_log.md](validation/feedback_log.md): feedback log từ vòng user test.
+- [validation/validation_summary.md](validation/validation_summary.md): tóm tắt kết quả validation.
+- [reflection/](reflection/): thư mục phản ánh cá nhân, gồm file cho từng thành viên, bao gồm [reflection/nguyen-thi-tra-my-2A202601026.md](reflection/nguyen-thi-tra-my-2A202601026.md).
 
-## Lịch — 6 mốc
+---
 
-| Mốc | Khoá 3 | Khoá 4 |
-|---|---|---|
-| Khai mạc + phát đề | 09:00 ngày 1 | 14:00 ngày 1 |
-| CP1 · Chốt Canvas | 10:00 ngày 1 | 15:00 ngày 1 |
-| CP2 · Show được thứ bấm được | 12:00 ngày 1 | 17:00 ngày 1 |
-| CP3 · AI chạy thật + đo lượt đầu | 16:00 ngày 1 | 10:30 ngày 2 |
-| CP4 · Chốt tiến độ — spec nộp hạn cứng **23:59 ngày 1** | 17:30 ngày 1 | 12:00 ngày 2 |
-| CP5 · Xác minh + validation + dry run | 09:00 ngày 2 | 14:00 ngày 2 |
-| CP6 · Demo | 10:00 ngày 2 | 15:00 ngày 2 |
+## 🌟 Giới thiệu sản phẩm
 
-Mỗi mốc cần show gì và được xác minh thế nào: xem bảng trong `04-rubric.md`.
+**VLearn Concise-RAG Tutor** giải quyết triệt để nỗi đau của học viên khi tự học slide trực tuyến:
+- **Câu trả lời súc tích (< 100 từ):** Giúp học viên nắm bắt nhanh trọng tâm khái niệm mà không bị ngắt mạch tư duy học tập bởi những câu trả lời dài dòng.
+- **Trích dẫn chính xác (Strict Grounding):** Tự động đối chiếu nguồn trích dẫn từ slide bài giảng và transcript giảng dạy của giáo viên.
+- **Độ tin cậy cao:** Hệ thống kiểm tra và loại bỏ các trích dẫn sai lệch hoặc ảo tưởng (hallucination) từ mô hình ngôn ngữ lớn (LLM).
 
-## Nộp bài
+### Các tính năng cốt lõi:
+1. **Highlight & Ask (Bôi đen hỏi đáp):** Học viên bôi đen trực tiếp thuật ngữ khó trên Slide, AI Tutor sẽ tự động lấy bối cảnh trang đó để trả lời.
+2. **Capture Area (Chụp vùng màn hình):** Drag-and-drop chụp lại một vùng slide (ví dụ: sơ đồ, bảng biểu, đoạn code) để gửi câu hỏi trực quan.
+3. **Smart Citation Tooltip:** Hiển thị trực quan mã trích dẫn slide/transcript (ví dụ: `[Txx-NNN]`). Học viên có thể click vào để tự động cuộn đến trang slide gốc.
+4. **Interactive Quizzer (Tạo quiz tự động):** Tự động sinh bộ câu hỏi trắc nghiệm 4 đáp án từ tài liệu đã chọn, hỗ trợ chấm điểm và hiển thị đáp án giải thích.
 
-Một repo nhóm, cấu trúc như sau. Spec chốt lúc 23:59 ngày 1; bản hoàn chỉnh trước CP6.
+---
 
+## 🛠️ Yêu cầu hệ thống & Cài đặt
+
+Dự án được chia thành 2 phần: **Backend** (FastAPI) và **Frontend** (React + Vite + TypeScript).
+
+### 1. Cấu hình khóa API (OpenAI / Gemini)
+Sản phẩm hỗ trợ sử dụng OpenAI (ví dụ: `gpt-4o`, `gpt-4o-mini`) bằng `OPENAI_API_KEY`. Nếu bạn dùng Google Gemini thay thế, `GEMINI_API_KEY` cũng được chấp nhận.
+- Lấy OpenAI API Key tại: https://platform.openai.com
+- (Nếu dùng Gemini) Lấy Gemini API Key tại: https://aistudio.google.com/apikey
+
+---
+
+### 2. Cài đặt chi tiết
+
+#### Bước 1: Khởi tạo Backend
+Mở một terminal mới và chạy các lệnh sau:
+
+```bash
+# Di chuyển vào thư mục backend
+cd codebase/backend
+
+# Tạo môi trường ảo (Khuyến nghị)
+python -m venv venv
+# Kích hoạt môi trường ảo:
+# Trên Windows:
+.\venv\Scripts\activate
+# Trên macOS/Linux:
+source venv/bin/activate
+
+# Cài đặt các thư viện phụ thuộc
+pip install -r requirements.txt
+
+# Tạo file cấu hình môi trường từ file ví dụ
+copy .env.example .env
+
+# Mở file .env vừa tạo và điền API Key của bạn:
+# OPENAI_API_KEY=your_actual_openai_api_key_here  # preferred
+# Or: GEMINI_API_KEY=your_actual_gemini_api_key_here  # legacy/gemini
 ```
-repo/
-├── README.md          ← thành viên (mã HV + tên) + phân công có tên từng phần
-├── spec.md            ← AI Spec theo 03-template-ai-spec.md
-├── demo-slides.pdf    ← slide 6 trang theo 02-guide.md §5.1
-├── codebase/          ← prototype (ghi rõ phần nào mock)
-├── eval/              ← golden set + bảng kết quả các lượt chạy
-├── validation/        ← feedback log từ vòng user test
-└── reflection/        ← mỗi người 1 file
+
+#### Bước 2: Khởi tạo Frontend
+Mở một terminal thứ hai và chạy các lệnh sau:
+
+```bash
+# Di chuyển vào thư mục frontend
+cd codebase/frontend
+
+# Cài đặt các package Node.js
+npm install
 ```
 
-## Chấm điểm
+---
 
-Tổng **100 điểm = 25 điểm nộp checkpoint + 75 điểm chấm bài nộp**. Chi tiết từng ý điểm: `04-rubric.md`.
+## 🚀 Hướng dẫn chạy thử và Nghiệm thu
 
-**25 điểm nộp — mỗi checkpoint 5 điểm (CP1-CP5):** nộp đúng hạn → 5 điểm · nộp muộn → 0 điểm cho mốc đó. Mỗi thành viên nộp riêng, cả nhóm dùng chung một link repo.
+Sau khi cài đặt thành công, bạn tiến hành chạy dự án theo các bước sau:
 
-**75 điểm chấm — trên artifact trong repo, mỗi con điểm trỏ về một file:**
+### 1. Khởi động Backend
+Tại terminal Backend (đã kích hoạt môi trường ảo):
+```bash
+uvicorn main:app --reload --port 8000
+```
+- **API URL:** `http://localhost:8000`
+- **Tài liệu API Swagger:** [http://localhost:8000/docs](http://localhost:8000/docs) (Dùng để kiểm tra trực tiếp các endpoint).
 
-| Khối | Điểm | Chấm trên file nào |
-|---|---|---|
-| R1 · Bằng chứng & impact | 15 | `spec.md` §1-§2 + log khảo sát/mining |
-| R2 · Lát cắt & thiết kế | 15 | `spec.md` §4 |
-| R3 · Chỗ khó & kịch bản rủi ro | 11 | `spec.md` §5-§6 |
-| R4 · Kiểm thử | 15 | `spec.md` §7 + `eval/` |
-| R5 · Prototype chạy được | 8 | `codebase/` + demo |
-| R6 · Validation với user | 8 | `validation/` |
-| R7 · Quy trình & repo | 3 | cấu trúc repo |
+### 2. Khởi động Frontend
+Tại terminal Frontend:
+```bash
+npm run dev
+```
+- **Ứng dụng Web:** [http://localhost:5173](http://localhost:5173)
 
-Ba điều nên biết trước khi làm:
+---
 
-- Điểm dựa trên **chuỗi quyết định và bằng chứng**, không dựa trên mức độ hoành tráng của sản phẩm.
-- Kết quả đo **ghi nhận trung thực** — kể cả khi không đạt mục tiêu nhóm tự đặt — vẫn được tính đủ điểm. Số liệu bị chỉnh sửa hoặc che giấu sẽ không được tính.
-- Reflection cá nhân chấm riêng theo rubric của khoá. Điểm vòng demo, chấm chéo trong zone và thưởng thêm (nếu có) theo thể lệ công bố lúc khai mạc.
+## 🔍 Kịch bản chạy thử (Test Walkthrough)
 
-## Luật chung
+Để nghiệm thu nhanh các tính năng sản phẩm trên giao diện, hãy thực hiện theo kịch bản sau:
 
-1. Prototype có 3 mức **Sketch / Mock / Working** — mức nào cũng bắt buộc **≥1 lời gọi AI chạy thật**.
-2. **Vibe-coding rule:** dùng AI để build thoải mái, nhưng không giải thích được phần có tên mình thì phần đó 0 điểm (kiểm tra tại CP5).
-3. **Quality bar** chốt tại spec.md 23:59 ngày 1 và giữ nguyên sau đó.
-4. Chỉ dùng dữ liệu trong `data/` hoặc dữ liệu giả tự sinh — không dùng dữ liệu thật của người thật. Không commit API key.
-5. Tuân thủ **quy định bảo mật dữ liệu** bên dưới — đây là điều kiện để được cấp data.
+1. **Bước 1: Tải tài liệu**
+   - Truy cập giao diện tại `http://localhost:5173`.
+   - Trong bảng điều khiển bên trái, kéo thả một file slide PDF bài giảng của bạn (hoặc tài liệu học tập trong thư mục `data/` của hackathon).
+2. **Bước 2: Sử dụng tính năng Highlight & Ask**
+   - Click chọn tài liệu vừa tải lên để mở trình đọc PDF.
+   - Dùng chuột bôi đen (highlight) một thuật ngữ bất kỳ trên slide.
+   - Nhìn sang bảng Chat bên phải, nhập câu hỏi của bạn và nhấn **Gửi**.
+   - Kiểm tra xem AI giải thích có súc tích và đính kèm chip trích dẫn `p.N` (Trang N) hay không. Click vào chip này để tự động cuộn đến trang đã trích dẫn.
+3. **Bước 3: Thử nghiệm Capture Area**
+   - Click vào nút **Capture area** trên thanh công cụ PDF.
+   - Kéo một khung chữ nhật bao quanh một hình ảnh, sơ đồ hoặc đoạn code trên slide.
+   - Đặt câu hỏi (ví dụ: *"Giải thích biểu đồ này"* hoặc *"Mã nguồn này thực hiện nhiệm vụ gì?"*) rồi nhấn **Gửi**.
+4. **Bước 4: Trải nghiệm Quiz**
+   - Chuyển sang tab **Quiz** ở bảng bên phải.
+   - Lựa chọn khoảng trang, số lượng câu hỏi và độ khó mong muốn.
+   - Nhấp **Generate Quiz** và tiến hành trả lời trực tiếp để chấm điểm.
 
-## Bảo mật dữ liệu được cung cấp
+---
 
-Dữ liệu trong `data/` là dữ liệu thật của khoá học (đã ẩn danh), cấp riêng cho hackathon này. Khi nhận data, nhóm cam kết:
+## 📐 Kiến trúc & Cơ chế hoạt động chính
 
-1. **Chỉ dùng trong phạm vi hackathon** — cho việc tìm bằng chứng, xây golden set và build prototype. Không dùng cho mục đích khác.
-2. **Không chia sẻ ra ngoài khoá học** — không đăng lên mạng xã hội, không gửi cho người ngoài, không đưa vào bất kỳ dataset hay repo công khai nào.
-3. **Không commit data pack vào repo nộp bài** — repo nhóm chỉ chứa trích dẫn ngắn để minh hoạ (vài dòng); golden set trích từ data ghi rõ mã đoạn/mã hội thoại thay vì dán nguyên văn dài.
-4. **Cẩn trọng khi đưa data vào công cụ ngoài** — chỉ đưa phần tối thiểu cần cho việc đang làm; lưu ý API/công cụ free tier có thể dùng dữ liệu để huấn luyện (xem `02-guide.md` §3.4).
-5. **Không cố suy ngược danh tính** từ dữ liệu đã ẩn danh ([học viên], mã U/C/T/M).
-6. Sau sự kiện, **xoá các bản sao data pack** khỏi máy cá nhân và các công cụ đã upload nếu ban tổ chức yêu cầu.
+Hệ thống hoạt động dựa trên mô hình **Strict Grounding RAG** khép kín gồm 3 lớp bảo vệ để ngăn chặn LLM ảo tưởng:
 
-Vi phạm được xử lý theo quy định của khoá và có thể ảnh hưởng trực tiếp đến điểm của nhóm.
+- **Tách trang thông minh:** Tách tài liệu theo từng trang độc lập, kết hợp BM25 RAG tối giản không cần cơ sở dữ liệu vector cồng kềnh.
+- **Đối chiếu chuỗi văn bản (difflib):** Toàn bộ trích dẫn của AI trả về được hệ thống kiểm thử lại trên server đối chiếu với dữ liệu text thực tế của trang slide trước khi phản hồi người dùng.
+
+---
+

@@ -3,9 +3,9 @@
 Upload a PDF, highlight passages or capture regions of a page, and ask a **strictly grounded**
 AI tutor about them. Also generates 4-option multiple-choice quizzes from the document.
 
-- **AI model:** Gemini Flash via `google-genai` — default `gemini-3.5-flash`, set by `GEMINI_MODEL`.
-  `gemini-2.5-flash` is listed by the API but returns `404 NOT_FOUND` for new keys
-  ("no longer available to new users"), so the default is the current Flash-tier model.
+- **AI model:** OpenAI (recommended) via the `openai` SDK — set `OPENAI_API_KEY` to use OpenAI models
+  (e.g., `gpt-4o`, `gpt-4o-mini`). The project also contains legacy Gemini support via
+  `google-genai` if `GEMINI_API_KEY` is provided; set `GEMINI_MODEL` to override the Gemini model name.
 - **Backend:** FastAPI + Swagger UI
 - **Frontend:** React 19 + Vite + pdf.js
 
@@ -21,11 +21,11 @@ AI tutor about them. Also generates 4-option multiple-choice quizzes from the do
 ```bash
 cd codebase/backend
 pip install -r requirements.txt
-cp .env.example .env          # then put your key in GEMINI_API_KEY
+cp .env.example .env          # then put your key in OPENAI_API_KEY (preferred) or GEMINI_API_KEY
 uvicorn main:app --reload --port 8000
 ```
 
-Get a key at https://aistudio.google.com/apikey.
+Get an OpenAI key at https://platform.openai.com (or a Gemini key at https://aistudio.google.com/apikey).
 
 - API: http://localhost:8000
 - **Swagger UI: http://localhost:8000/docs**
@@ -74,7 +74,8 @@ The strict-grounding constraint is enforced in three places, not just in the pro
    as `dropped`.
 
 Screenshots are also in-scope source material: a crop is pixels from the uploaded PDF, sent to
-Gemini as an image part alongside that page's text.
+the model as an image part alongside that page's text (OpenAI image-capable models or Gemini
+clients when available).
 
 ---
 
@@ -109,7 +110,7 @@ codebase/
 │   ├── retrieval.py     BM25 over page chunks (dependency-free)
 │   ├── grounding.py     context selection + citation verification
 │   ├── prompts.py       system instructions
-│   ├── gemini.py        Gemini 2.5 Flash structured-output client
+│   ├── gemini.py        Legacy Gemini structured-output client (adaptable to OpenAI)
 │   ├── routers/         documents · chat · quiz
 │   └── storage/         uploaded PDFs + extracted pages (gitignored)
 └── frontend/

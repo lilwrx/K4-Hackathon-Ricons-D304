@@ -1,0 +1,65 @@
+[
+  {
+    "id": "GS-01",
+    "class": "Happy Path",
+    "context_page": 2,
+    "highlighted_text": "Few-shot Prompting",
+    "question": "Few-shot prompting là gì?",
+    "expected_answer": "Phương pháp kỹ thuật prompt bằng cách đưa ra một vài ví dụ minh họa về đầu vào và đầu ra mong muốn để hướng dẫn LLM thực hiện nhiệm vụ.",
+    "expected_citation": "Day 2, Page 2"
+  },
+  {
+    "id": "GS-02",
+    "class": "Happy Path",
+    "context_page": 4,
+    "highlighted_text": "Memory Injection",
+    "question": "Memory Injection hoạt động thế nào?",
+    "expected_answer": "Là kỹ thuật tiêm trực tiếp lịch sử hội thoại hoặc thông tin ngữ cảnh quan trọng vào prompt của LLM để duy trì bộ nhớ ngắn hạn.",
+    "expected_citation": "Day 2, Page 4"
+  },
+  {
+    "id": "GS-03",
+    "class": "Happy Path",
+    "context_page": 15,
+    "highlighted_text": "ReAct Agent",
+    "question": "Giải thích mô hình ReAct Agent",
+    "expected_answer": "ReAct kết hợp giữa lập luận (Reasoning) và hành động (Acting), cho phép AI suy nghĩ trước khi gọi công cụ bên ngoài.",
+    "expected_citation": "Day 3, Page 15"
+  },
+  {
+    "id": "GS-04",
+    "class": "Happy Path",
+    "context_page": 22,
+    "highlighted_text": "RAG Flow",
+    "question": "Quy trình RAG cơ bản gồm những bước nào?",
+    "expected_answer": "Gồm 3 bước: Retrieve (truy xuất thông tin từ tài liệu), Context Inject (bơm bối cảnh vào prompt) và Generate (LLM sinh câu trả lời).",
+    "expected_citation": "Day 2, Page 22"
+  },
+  {
+    "id": "GS-05",
+    "class": "Nguồn sự thật (Chưa có trong tài liệu)",
+    "context_page": 2,
+    "highlighted_text": "Qlora tuning",
+    "question": "Qlora là gì và cách cấu hình?",
+    "expected_answer": "Tài liệu học tập hiện tại không đề cập đến khái niệm Qlora.",
+    "expected_grounded": false
+  },
+  {
+    "id": "GS-06",
+    "class": "Mơ hồ / Thiếu thông tin",
+    "context_page": 3,
+    "highlighted_text": "Tool",
+    "question": "Tool là sao?",
+    "expected_answer": "Yêu cầu làm rõ ngữ cảnh sử dụng Tool (API hay ReAct Agent).",
+    "expected_action": "Clarification loop"
+  },
+  {
+    "id": "GS-07",
+    "class": "Ngoài phạm vi",
+    "context_page": 1,
+    "highlighted_text": "",
+    "question": "Khi nào lớp mình nộp bài hackathon thế?",
+    "expected_answer": "Từ chối trả lời vì câu hỏi nằm ngoài phạm vi hỗ trợ học thuật.",
+    "expected_grounded": false
+  }
+]
