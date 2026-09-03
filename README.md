@@ -9,7 +9,7 @@
 
 - **Đào Văn Đạt – 2A202601302**: phụ trách chuẩn bị tài liệu nộp, cập nhật phần README và cấu trúc repo, phối hợp chuẩn bị nội dung demo và reflection cho mốc nộp cuối.
 - **Nguyễn Thị Trà My – 2A202601026**: phụ trách phần validation, ghi nhận feedback từ vòng user test và tổng hợp phản ánh cá nhân.
-- **Hoàng Trường Giang – 2A202601224**: phụ trách prompt engineering và xây dựng golden set.
+- **Hoàng Trường Giang – 2A202601224**: phụ trách prompt engineering và xây dựng golden set, backend, ai agent
 - **Đào Ngọc Duy – 2A202601780**: nghiên cứu yêu cầu, xây dựng spec, triển khai backend prototype và phối hợp phát triển toàn diện.
 - **Nguyễn Thị Kiều Trang – frontend**: phụ trách giao diện frontend và cấu trúc trải nghiệm người dùng.
 
